@@ -1,8 +1,8 @@
-##Section 1: Architecture summary
+Section 1: Architecture summary
 
 The Smart Clinic Management System follows a three-tier architecture. The Presentation Layer contains Thymeleaf pages and REST API clients. Requests are handled by Controllers, business rules are implemented in the Service Layer, and data access is performed through Repositories. The application uses MySQL for structured relational data such as patients, doctors, and appointments, and MongoDB for flexible document-based data such as prescriptions. Spring Boot integrates these components, while Docker and CI/CD enable consistent deployment and automated delivery
 
-##Section 2: Numbered flow of data and control
+Section 2: Numbered flow of data and control
 
 1.The user accesses the application through a Thymeleaf web page (such as the Admin or Doctor Dashboard) or a REST API client (such as the Appointment or Patient module).
 2.The request is routed to the appropriate Thymeleaf Controller or REST Controller, depending on the type of request.
