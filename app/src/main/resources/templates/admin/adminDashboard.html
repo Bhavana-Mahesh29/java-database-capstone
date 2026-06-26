@@ -106,4 +106,90 @@ with search, filter, and modal functionality.
     * Finish the structure by properly closing all tags.
 
  -->
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <!-- Favicon -->
+    <link rel="icon" type="image/png"
+          th:href="@{/assets/images/logo/logo.png}" />
+    <title>Admin Dashboard</title>
+    <link rel="stylesheet" th:href="@{/assets/css/adminDashboard.css}">
+    <link rel="stylesheet" th:href="@{/assets/css/style.css}">
+
+    <!-- Common JavaScript -->
+    <script th:src="@{/assets/js/render.js}" defer></script>
+    <script th:src="@{/assets/js/util.js}" defer></script>
+    <script th:src="@{/assets/js/header.js}" defer></script>
+    <script th:src="@{/assets/js/footer.js}" defer></script>
+</head>
+<body onload="renderContent()">
+<div class="container">
+
+    <div class="wrapper">
+
+        <!-- Header -->
+        <div id="header"></div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+
+            <input
+                    type="text"
+                    id="searchBar"
+                    placeholder="Search doctors..."
+            >
+
+            <!-- Time Filter -->
+            <select id="timeFilter">
+                <option value="">All Times</option>
+                <option value="AM">AM</option>
+                <option value="PM">PM</option>
+            </select>
+
+            <!-- Specialty Filter -->
+            <select id="specialtyFilter">
+                <option value="">All Specialties</option>
+                <option value="Cardiologist">Cardiologist</option>
+                <option value="Dentist">Dentist</option>
+                <option value="Dermatologist">Dermatologist</option>
+                <option value="Neurologist">Neurologist</option>
+                <option value="Orthopedic">Orthopedic</option>
+            </select>
+
+            <!-- Dynamic Doctor Cards -->
+            <div id="content"></div>
+
+        </main>
+
+        <!-- Footer -->
+        <div id="footer"></div>
+
+    </div>
+
+</div>
+
+<!-- Modal -->
+<div id="modal" class="modal">
+
+    <span id="closeModal" class="close">&times;</span>
+
+    <div id="modal-body"></div>
+
+</div>
+
+<!-- Page Specific JS -->
+<script type="module"
+        th:src="@{/assets/js/adminDashboard.js}"
+        defer>
+</script>
+
+<script type="module"
+        th:src="@{/assets/js/doctorCard.js}"
+        defer>
+</script>
+
+</body>
+
+</html>
 

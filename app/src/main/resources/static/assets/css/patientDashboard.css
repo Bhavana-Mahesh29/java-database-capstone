@@ -1,31 +1,133 @@
-/* This is the style sheet for the patientDashboard.html */
-  .card-actions {
-    background-color: #244557;
-    padding: 10px;
-    text-align: center;
-  }
 
-  .card-actions:hover{
-    background-color: #1c3745;
-  }
-  .ripple-overlay {
-    position: fixed;
-    width: 20px;
-    height: 20px;
-    background-color: #1c3745;
-    border-radius: 50%;
-    z-index: 9999;
-    transform: translate(-50%, -50%) scale(0);
-    transition: transform 1s ease-out, opacity 1s ease;
-  }
-  
-  .ripple-overlay.active {
-    transform: translate(-50%, -50%) scale(150);
-    opacity: 1;
-  }
-  
-  .modalApp {
-    position: fixed;
+  /* This is the style sheet for the patientDashboard.html */
+
+  /*
+  Card Actions (`.card-actions`)
+
+  * Purpose: Style the action section of each doctor card where buttons such as
+    "Book Now" are displayed.
+
+  * Properties:
+    * `background-color: #244557` — applies a dark blue background.
+    * `padding: 10px` — adds spacing inside the section.
+    * `text-align: center` — centers the action button.
+
+  * On Hover:
+    * Changes the background color to `#1c3745` for visual feedback.
+
+  Ripple Overlay (`.ripple-overlay`)
+
+  * Purpose: Display a ripple animation across the screen after confirming a booking.
+
+  * Properties:
+    * `position: fixed` — keeps the ripple fixed on the viewport.
+    * `width` and `height: 20px` — creates the initial circle.
+    * `background-color: #1c3745` — uses the application's primary dark color.
+    * `border-radius: 50%` — creates a perfect circle.
+    * `z-index: 9999` — displays the ripple above all page elements.
+    * `transform: translate(-50%, -50%) scale(0)` — starts the ripple at its original size.
+    * `transition` — smoothly animates the ripple expansion and fade.
+
+  * Active State (`.ripple-overlay.active`):
+    * Expands the ripple using `scale(150)`.
+    * Keeps the ripple fully visible during the animation.
+
+  Booking Modal (`.modalApp`)
+
+  * Purpose: Display a bottom slide-up modal used for appointment booking.
+
+  * Properties:
+    * `position: fixed` — fixes the modal on the screen.
+    * `bottom: -100%` — initially hides the modal below the viewport.
+    * `left: 50%` and `transform: translateX(-50%)` — horizontally centers the modal.
+    * `width: 50%` — provides a comfortable reading width.
+    * `background: #fff` — uses a clean white background.
+    * `padding: 20px` — adds internal spacing.
+    * `z-index: 10000` — places the modal above all other elements.
+    * `transition: bottom 1.5s ease-in` — creates a smooth slide-up animation.
+    * `box-shadow` — adds depth.
+    * `border-radius: 10px 10px 0 0` — rounds only the top corners.
+    * `text-align: center` — centers modal content.
+
+  * Active State (`.modalApp.active`):
+    * Sets `bottom: 0` to slide the modal into view.
+
+  Modal Heading (`.modalApp h2`)
+
+  * Purpose: Add spacing above the booking title.
+
+  * Properties:
+    * `margin-top: 20px` — separates the heading from the top edge.
+
+  Modal Input Fields (`.modalApp input`)
+
+  * Purpose: Style all input fields consistently.
+
+  * Properties:
+    * `display: block` — places each field on its own line.
+    * `margin: 10px auto` — centers the input horizontally.
+    * `padding: 10px` — improves usability.
+    * `width: 90%` — creates consistent field width.
+    * `margin-bottom: 40px` — adds spacing between fields.
+
+  Modal Select Fields (`.modalApp select`)
+
+  * Purpose: Style dropdown menus consistently with input fields.
+
+  * Properties:
+    * `display: block` — places each dropdown on a new line.
+    * `margin: 10px auto` — centers the dropdown.
+    * `padding: 10px` — improves usability.
+    * `width: 90%` — keeps dropdowns aligned with inputs.
+    * `margin-bottom: 40px` — creates spacing between controls.
+
+  Booking Confirmation Button (`.confirm-booking`)
+
+  * Purpose: Style the appointment confirmation button.
+
+  * Properties:
+    * `padding: 10px 20px` — creates a comfortable clickable area.
+    * `background: #1c3745` — matches the application's color scheme.
+    * `color: #fff` — provides strong text contrast.
+    * `border: none` — removes the default border.
+    * `cursor: pointer` — indicates the button is clickable.
+
+  * On Hover:
+    * Uses `filter: brightness(1.2)` to brighten the button.
+    * Maintains the same background color for visual consistency.
+  */
+
+  /* Card Actions */
+.card-actions {
+  background-color: #244557;
+  padding: 10px;
+  text-align: center;
+}
+
+.card-actions:hover {
+  background-color: #1c3745;
+}
+
+/* Ripple Overlay */
+.ripple-overlay {
+  position: fixed;
+  width: 20px;
+  height: 20px;
+  background-color: #1c3745;
+  border-radius: 50%;
+  z-index: 9999;
+  transform: translate(-50%, -50%) scale(0);
+  transition: transform 1s ease-out, opacity 1s ease;
+}
+
+.ripple-overlay.active {
+  transform: translate(-50%, -50%) scale(150);
+  opacity: 1;
+}
+
+/* Booking Modal */
+.modalApp {
+  position: fixed;
   bottom: -100%;
   left: 50%;
   transform: translateX(-50%);
@@ -37,44 +139,45 @@
   box-shadow: 0 -5px 10px rgba(0, 0, 0, 0.3);
   border-radius: 10px 10px 0 0;
   text-align: center;
-  }
-  
-  .modalApp.active {
-    bottom: 0;
-  }
-  
-  .modalApp h2 {
-    margin-top: 20px;
-  }
-  
-  .modalApp input {
-    display: block;
-    margin: 10px auto;
-    padding: 10px;
-    width: 90%;
-    margin-bottom: 40px;
-  }
+}
 
-  .modalApp select {
-    display: block;
-    margin: 10px auto;
-    padding: 10px;
-    width: 90%;
-    margin-bottom: 40px;
-  }
-  
-  .confirm-booking {
-    padding: 10px 20px;
-    background: #1c3745;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-    
-  
-    
-  }
-  .confirm-booking:hover {
-    filter: brightness(1.2);
-    background-color: #1c3745;
-  }
-  
+.modalApp.active {
+  bottom: 0;
+}
+
+/* Modal Heading */
+.modalApp h2 {
+  margin-top: 20px;
+}
+
+/* Input Fields */
+.modalApp input {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 90%;
+  margin-bottom: 40px;
+}
+
+/* Select Fields */
+.modalApp select {
+  display: block;
+  margin: 10px auto;
+  padding: 10px;
+  width: 90%;
+  margin-bottom: 40px;
+}
+
+/* Booking Confirmation Button */
+.confirm-booking {
+  padding: 10px 20px;
+  background: #1c3745;
+  color: #fff;
+  border: none;
+  cursor: pointer;
+}
+
+.confirm-booking:hover {
+  filter: brightness(1.2);
+  background-color: #1c3745;
+}

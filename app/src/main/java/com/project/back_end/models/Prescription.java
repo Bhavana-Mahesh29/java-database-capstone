@@ -4,7 +4,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Size;
-@Document
+@Document(collection="prescriptions")
 public class Prescription {
 
   // @Document annotation:

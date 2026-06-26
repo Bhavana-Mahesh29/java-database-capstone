@@ -9,6 +9,7 @@ and triggers modal-based login functionality.
 
    * Add a comment at the very top to identify the file as `index.html`. This helps developers stay organized.
 
+
 2. Declare Document Type
 
    * Use the declaration for HTML5 so browsers know how to render the page correctly.
@@ -102,3 +103,61 @@ and triggers modal-based login functionality.
     * Properly close all opened tags to complete the document structure.
 
  -->
+<!DOCTYPE html>
+<html lang ="en">
+<head>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" href="./assets/css/index.css">
+    <link rel="stylesheet" href="./assets/css/style.css">
+    <script src="./js/util.js" defer></script>
+    <script src="./js/render.js" defer></script>
+    <script src="./js/components/header.js" defer></script>
+    <script src="./js/components/footer.js" defer></script>
+
+</head>
+
+<body>
+
+<main>
+    <div class="container">
+
+        <div class="wrapper">
+
+            <!-- Header Placeholder -->
+            <div id="header"></div>
+
+            <!-- Main Content -->
+            <main class="main-content">
+
+                <h2 id="roleHeading">Select Your Role</h2>
+
+                <button id="adminBtn" onclick="selectRole('admin')">
+                    Admin
+                </button>
+
+                <button id="doctorBtn" onclick="selectRole('doctor')">
+                    Doctor
+                </button>
+
+                <button id="patientBtn" onclick="selectRole('patient')">
+                    Patient
+                </button>
+
+            </main>
+
+            <!-- Footer Placeholder -->
+            <div id="footer"></div>
+
+        </div>
+
+    </div>
+</main>
+<div id="modal" class="modal">
+    <button id="closeModal">&times;</button>
+    <div id="modal-body">
+
+</div>
+    <script type="module" src="../js/services/index.js" defer></script>
+
+</body>
+</html>
