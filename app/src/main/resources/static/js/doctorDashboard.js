@@ -52,3 +52,106 @@
     - Call renderContent() (assumes it sets up the UI layout)
     - Call loadAppointments() to display today's appointments by default
 */
+
+
+import { getAllAppointments } from "./services/appointmentRecordService.js";
+import { createPatientRow } from "./components/patientRows.js";
+
+const patientTableBody = document.getElementById("patientTableBody");
+
+let selectedDate = new Date().toISOString().split("T")[0];
+let token = localStorage.getItem("token");
+let patientName = null;
+
+const searchBar = document.getElementById("searchBar");
+
+if (searchBar) {
+    searchBar.addEventListener("input", () => {
+        const value = searchBar.value.trim();
+
+        patientName = value === "" ? null : value;
+
+        loadAppointments();
+    });
+}
+
+const todayButton = document.getElementById("todayButton");
+
+if (todayButton) {
+    todayButton.addEventListener("click", () => {
+        selectedDate = new Date().toISOString().split("T")[0];
+
+        document.getElementById("datePicker").value = selectedDate;
+
+        loadAppointments();
+    });
+}
+
+const datePicker = document.getElementById("datePicker");
+
+if (datePicker) {
+    datePicker.value = selectedDate;
+
+    datePicker.addEventListener("change", () => {
+        selectedDate = datePicker.value;
+
+        loadAppointments();
+    });
+}
+
+async function loadAppointments() {
+    try {
+
+        const appointments = await getAllAppointments(
+            selectedDate,
+            patientName,
+            token
+        );
+
+        patientTableBody.innerHTML = "";
+
+        if (!appointments || appointments.length === 0) {
+
+            patientTableBody.innerHTML = `
+<tr>
+<td colspan="5">
+    No Appointments found for today
+                              </td>
+    </tr>
+`;
+
+            return;
+        }
+
+        appointments.forEach((appointment) => {
+
+            const row = createPatientRow(appointment.patient);
+
+            patientTableBody.appendChild(row);
+
+        });
+
+    } catch (error) {
+
+        console.error(error);
+
+        patientTableBody.innerHTML = `
+<tr>
+<td colspan="5">
+    Unable to load appointments.
+</td>
+</tr>
+`;
+    }
+}
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    if (typeof renderContent === "function") {
+        renderContent();
+    }
+
+    loadAppointments();
+
+});
+
