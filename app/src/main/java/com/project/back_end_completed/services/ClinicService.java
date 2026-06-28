@@ -1,5 +1,5 @@
 package com.project.back_end_completed.services;
-
+import org.springframework.stereotype.Service;
 import com.project.back_end_completed.models.Doctor;
 import com.project.back_end_completed.repo.AdminRepository;
 import com.project.back_end_completed.repo.DoctorRepository;
@@ -15,7 +15,7 @@ import java.time.LocalTime;
 import java.util.*;
 
 @Service
-public class Service {
+public class ClinicService {
 
     private static final Logger logger = LoggerFactory.getLogger(Service.class);
 
@@ -26,7 +26,7 @@ public class Service {
     private final DoctorService doctorService;
     private final PatientService patientService;
 
-    public Service(TokenService tokenService,
+    public ClinicService(TokenService tokenService,
                    AdminRepository adminRepository,
                    DoctorRepository doctorRepository,
                    PatientRepository patientRepository,

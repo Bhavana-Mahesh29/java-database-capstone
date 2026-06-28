@@ -4,7 +4,7 @@ import com.project.back_end_completed.models.Appointment;
 import com.project.back_end_completed.repo.DoctorRepository;
 import com.project.back_end_completed.repo.PatientRepository;
 import com.project.back_end_completed.services.AppointmentService;
-import com.project.back_end_completed.services.Service;
+import com.project.back_end_completed.services.ClinicService;
 import com.project.back_end_completed.services.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -21,18 +21,18 @@ import java.util.Map;
 public class AppointmentController {
 
     private final AppointmentService appointmentService;
-    private final Service service;
+    private final ClinicService clinicservice;
     private final TokenService tokenService;
     private final DoctorRepository doctorRepository;
     private final PatientRepository patientRepository;
 
     public AppointmentController(AppointmentService appointmentService,
-                                 Service service,
+                                 ClinicService clinicservice,
                                  TokenService tokenService,
                                  DoctorRepository doctorRepository,
                                  PatientRepository patientRepository) {
         this.appointmentService = appointmentService;
-        this.service = service;
+        this.clinicservice = clinicservice;
         this.tokenService = tokenService;
         this.doctorRepository = doctorRepository;
         this.patientRepository = patientRepository;
@@ -45,7 +45,7 @@ public class AppointmentController {
             @PathVariable @DateTimeFormat(iso = DateTimeFormat.ISO.DATE) LocalDate date,
             @PathVariable String patientName) {
 
-        Map<String, String> validation = service.validateToken(token, "doctor");
+        Map<String, String> validation = clinicservice.validateToken(token, "doctor");
         if (!validation.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.copyOf(validation));
         }
@@ -62,12 +62,12 @@ public class AppointmentController {
             @Valid @RequestBody Appointment appointment,
             @PathVariable String token) {
 
-        Map<String, String> validation = service.validateToken(token, "patient");
+        Map<String, String> validation = clinicservice.validateToken(token, "patient");
         if (!validation.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(validation);
         }
 
-        int validSlot = service.validateAppointment(
+        int validSlot = clinicservice.validateAppointment(
                 appointment.getDoctor().getId(),
                 appointment.getAppointmentTime());
 
@@ -95,7 +95,7 @@ public class AppointmentController {
             @Valid @RequestBody Appointment appointment,
             @PathVariable String token) {
 
-        Map<String, String> validation = service.validateToken(token, "patient");
+        Map<String, String> validation = clinicservice.validateToken(token, "patient");
         if (!validation.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(validation);
         }
@@ -116,7 +116,7 @@ public class AppointmentController {
             @PathVariable Long id,
             @PathVariable String token) {
 
-        Map<String, String> validation = service.validateToken(token, "patient");
+        Map<String, String> validation = clinicservice.validateToken(token, "patient");
         if (!validation.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(validation);
         }

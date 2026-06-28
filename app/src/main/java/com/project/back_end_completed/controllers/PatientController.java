@@ -4,7 +4,7 @@ import com.project.back_end_completed.DTO.Login;
 import com.project.back_end_completed.models.Patient;
 import com.project.back_end_completed.repo.PatientRepository;
 import com.project.back_end_completed.services.PatientService;
-import com.project.back_end_completed.services.Service;
+import com.project.back_end_completed.services.ClinicService;
 import com.project.back_end_completed.services.TokenService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
@@ -18,16 +18,16 @@ import java.util.Map;
 public class PatientController {
 
     private final PatientService patientService;
-    private final Service service;
+    private final ClinicService clinicservice;
     private final TokenService tokenService;
     private final PatientRepository patientRepository;
 
     public PatientController(PatientService patientService,
-                             Service service,
+                             ClinicService clinicservice,
                              TokenService tokenService,
                              PatientRepository patientRepository) {
         this.patientService = patientService;
-        this.service = service;
+        this.clinicservice = clinicservice;
         this.tokenService = tokenService;
         this.patientRepository = patientRepository;
     }
@@ -35,7 +35,7 @@ public class PatientController {
     // GET /{token} — get patient details
     @GetMapping("/{token}")
     public ResponseEntity<Map<String, Object>> getPatient(@PathVariable String token) {
-        Map<String, String> validation = service.validateToken(token, "patient");
+        Map<String, String> validation = clinicservice.validateToken(token, "patient");
         if (!validation.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.copyOf(validation));
         }
@@ -45,7 +45,7 @@ public class PatientController {
     // POST / — register new patient
     @PostMapping
     public ResponseEntity<Map<String, String>> createPatient(@Valid @RequestBody Patient patient) {
-        boolean isValid = service.validatePatient(patient.getEmail(), patient.getPhone());
+        boolean isValid = clinicservice.validatePatient(patient.getEmail(), patient.getPhone());
         if (!isValid) {
             return ResponseEntity.status(HttpStatus.CONFLICT)
                     .body(Map.of("message", "Patient with this email or phone already exists"));
@@ -62,7 +62,7 @@ public class PatientController {
     // POST /login — patient login
     @PostMapping("/login")
     public ResponseEntity<Map<String, String>> login(@RequestBody Login login) {
-        return service.validatePatientLogin(login.getIdentifier(), login.getPassword());
+        return clinicservice.validatePatientLogin(login.getIdentifier(), login.getPassword());
     }
 
     // GET /{patientId}/{token}/{user} — get patient's appointments
@@ -72,7 +72,7 @@ public class PatientController {
             @PathVariable String token,
             @PathVariable String user) {
 
-        Map<String, String> validation = service.validateToken(token, user);
+        Map<String, String> validation = clinicservice.validateToken(token, user);
         if (!validation.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.copyOf(validation));
         }
@@ -86,10 +86,10 @@ public class PatientController {
             @PathVariable String name,
             @PathVariable String token) {
 
-        Map<String, String> validation = service.validateToken(token, "patient");
+        Map<String, String> validation = clinicservice.validateToken(token, "patient");
         if (!validation.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.copyOf(validation));
         }
-        return service.filterPatient(condition, name, token);
+        return clinicservice.filterPatient(condition, name, token);
     }
 }

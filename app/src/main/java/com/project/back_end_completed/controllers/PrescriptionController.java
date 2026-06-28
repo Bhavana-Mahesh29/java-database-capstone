@@ -3,7 +3,7 @@ package com.project.back_end_completed.controllers;
 import com.project.back_end_completed.models.Prescription;
 import com.project.back_end_completed.services.AppointmentService;
 import com.project.back_end_completed.services.PrescriptionService;
-import com.project.back_end_completed.services.Service;
+import com.project.back_end_completed.services.ClinicService;
 import jakarta.validation.Valid;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,14 +16,14 @@ import java.util.Map;
 public class PrescriptionController {
 
     private final PrescriptionService prescriptionService;
-    private final Service service;
+    private final ClinicService clinicservice;
     private final AppointmentService appointmentService;
 
     public PrescriptionController(PrescriptionService prescriptionService,
-                                  Service service,
+                                  ClinicService clinicservice,
                                   AppointmentService appointmentService) {
         this.prescriptionService = prescriptionService;
-        this.service = service;
+        this.clinicservice = clinicservice;
         this.appointmentService = appointmentService;
     }
 
@@ -33,7 +33,7 @@ public class PrescriptionController {
             @Valid @RequestBody Prescription prescription,
             @PathVariable String token) {
 
-        Map<String, String> validation = service.validateToken(token, "doctor");
+        Map<String, String> validation = clinicservice.validateToken(token, "doctor");
         if (!validation.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(validation);
         }
@@ -50,7 +50,7 @@ public class PrescriptionController {
             @PathVariable Long appointmentId,
             @PathVariable String token) {
 
-        Map<String, String> validation = service.validateToken(token, "doctor");
+        Map<String, String> validation = clinicservice.validateToken(token, "doctor");
         if (!validation.isEmpty()) {
             return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(Map.copyOf(validation));
         }
